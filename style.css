@@ -1,0 +1,8 @@
+body {
+  background-color: rgb(46, 111, 165);
+  color: white;
+}
+
+li {
+  list-style-type: none;
+}
