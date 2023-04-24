@@ -1,27 +1,16 @@
+let score = 0;
+let index = 0;
+let time = 60;
+let pause = 0;
+var timeLeft = document.createElement("p");
 const startBtn = document.querySelector(".startBtn");
 const startSection = document.querySelector(".start");
 const quiz = document.querySelector(".quiz");
 const question = document.querySelector(".question");
 const answerList = document.querySelector(".answerList");
 var timeLeft = document.createElement("p");
-let index = 0;
-let score = 0;
-let time = 60;
 
-function timer() {
-  quiz.append(timeLeft);
-  setInterval(function () {
-    time--;
-    timeLeft.innerHTML = "Time: " + time;
-    if (time <= 0) {
-      clearInterval(time);
-      endQuiz();
-      timeLeft.innerHTML = "Times Out!";
-    }
-  }, 1000)
-};
-
-const values = [
+var values = [
   {
     questionValue: "How do you create a varibale in javascript?",
     answerValue: "C. var",
@@ -69,6 +58,19 @@ startBtn.addEventListener("click", function () {
   startSection.style.display = "none";
   startQuiz(index);
 });
+
+function timer() {
+  quiz.append(timeLeft);
+  setInterval(function () {
+    time--;
+    timeLeft.innerHTML = "Time: " + time;
+    if (time <= 0) {
+      clearInterval(time);
+      endQuiz();
+      timeLeft.innerHTML = "Times Out!";
+    }
+  }, 1000)
+};
 
 function startQuiz(index) {
   question.innerHTML = "";
@@ -126,25 +128,27 @@ function endQuiz() {
       initials: initials,
     };
     localStorage.setItem("score", JSON.stringify(obj));
-  })
-  saveInfo.addEventListener("click", function() {
-    var initials = userInitials.value;
+  });
+  button.addEventListener("click", function () {
+    var initials = input.value;
     if (initials === "") {
-        console.log("No value entered!");
+      console.log("No value entered!");
     } else {
-        var finalScore = {
-            initials: initials,
-            score: timeRemaining * 2
-        }
-        console.log(finalScore);
-        var allScores = localStorage.getItem("allScores");
-        if (allScores === null) {
-            allScores = [];
-        } else {
-            allScores = JSON.parse(allScores);
-        }
-        allScores.push(finalScore);
-        var newScore = JSON.stringify(allScores);
-        localStorage.setItem("allScores", newScore);
-        window.location.replace("scores.html");
+      var finalScore = {
+        initials: initials,
+        score: time * 2,
+      };
+      console.log(finalScore);
+      var allScores = localStorage.getItem("allScores");
+      if (allScores === null) {
+        allScores = [];
+      } else {
+        allScores = JSON.parse(allScores);
+      }
+      allScores.push(finalScore);
+      var newScore = JSON.stringify(allScores);
+      localStorage.setItem("allScores", newScore);
+      window.location.replace("scores.html");
     }
+  });
+}
